@@ -8,7 +8,8 @@ function App() {
     projects:[],
   });
   let content;
-  function handleNewProjectClick(){
+
+  function handleStartNewProject(){
     setProjectsState(prevState=>{
       return{
         ...prevState,
@@ -16,15 +17,24 @@ function App() {
       }
   })
   }
+  function handleSaveNewProject(projectObject){
+    setProjectsState(prevState=>{
+      return{
+        ...prevState,
+        projects:[...prevState.projects,{...projectObject}]
+      }
+    })
+  }
+  console.log(projectsState);
   if(projectsState.selectedProjectId===null){
-    content=<NewProject/>
+    content=<NewProject onSave={handleSaveNewProject}/>
   }else if(projectsState.selectedProjectId===undefined){
-    content=<NoProjectSelected onClickNewProject={handleNewProjectClick}/>
+    content=<NoProjectSelected onClickNewProject={handleStartNewProject}/>
   }
 
   return (
     <main className="h-screen my-8 flex gap-8">
-      <ProjectsSidebar onClickNewProject={handleNewProjectClick}/>      
+      <ProjectsSidebar onClickNewProject={handleStartNewProject}/>      
       {content}
     </main>
   );
