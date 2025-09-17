@@ -25,16 +25,25 @@ function App() {
       }
     })
   }
+  function handleCancelProject(){
+    console.log("cancel");
+    setProjectsState(prevState=>{
+      return{
+        ...prevState,
+        selectedProjectId:undefined,
+      }
+  })
+  }
   console.log(projectsState);
   if(projectsState.selectedProjectId===null){
-    content=<NewProject onSave={handleSaveNewProject}/>
+    content=<NewProject onSave={handleSaveNewProject} onCancel={handleCancelProject}/>
   }else if(projectsState.selectedProjectId===undefined){
     content=<NoProjectSelected onClickNewProject={handleStartNewProject}/>
   }
 
   return (
     <main className="h-screen my-8 flex gap-8">
-      <ProjectsSidebar onClickNewProject={handleStartNewProject}/>      
+      <ProjectsSidebar onClickNewProject={handleStartNewProject} projects={projectsState.projects}/>      
       {content}
     </main>
   );
